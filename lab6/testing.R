@@ -1,4 +1,13 @@
 ## Q2
+### homogeneity
+library(reshape2)
+library(car)
+group1 <- rnorm( 12, mean = 17.17,sd = 13.25)
+group2 <- rnorm(12, mean = 23.17, sd = 33.45)
+sample <- as.data.frame(cbind(group1,group2))
+dataset <- melt(sample)
+leveneTest(value~variable,dataset)
+### ANOV
 low_income <- c(5,7,9,11,13,8,10,34,17,50,17,25)
 high_income <- c(25,24,8,2,11,10,10,66,113,1,3,5)
 income <- c(low_income,high_income)

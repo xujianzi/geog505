@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(graphics)\ndf <- airquality\nboxplot(Ozone ~ Month, data = df)\nkruskal.test(Ozone ~ Month, data = df)\n\n\nN <- 50\nk <- 5\nWSS <- 2000\nMean_sqB <- 116.3\ndf1 <- k - 1\ndf2 <- N - k\nBSS <- Mean_sqB*df1\nMean_sqW <- WSS/df2\nf <- Mean_sqB/Mean_sqW\nTotal1 <- BSS + WSS\nTotal2 <- df1 + df2\ns_f <- qf(0.95, df1 = 4, df2 = 45)\nif(f > s_f){\n  print(\"the means of the categories are not equal\")\n}\nelse\n  print(\"the means of the categories are equal\")",
+    "created" : 1509372112120.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3021787408",
+    "id" : "DC3746B3",
+    "lastKnownWriteTime" : 1509389751,
+    "last_content_update" : 1509389751228,
+    "path" : "D:/JX/G533/Lab/lab6/testing2.R",
+    "project_path" : "testing2.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

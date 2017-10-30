@@ -36,6 +36,11 @@ Mean_sqW <- WSS/df2
 f <- Mean_sqB/Mean_sqW
 Total1 <- BSS + WSS
 Total2 <- df1 + df2
+s_f <- qf(0.95, df1 = 4, df2 = 45)
+if(f > s_f){
+  print("the means of the categories are not equal")
+}else
+  print("the means of the categories are equal")
 
 ## define the variables here, and use the imbedded r code like `r variable` to fill in the blanks.  
 
