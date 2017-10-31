@@ -18,9 +18,9 @@ Assume that an analysis of variance is conducted for a study where there are $N 
 
 |          | Sum of squares  | Degrees of freedom |  Mean square   |       *F*       |
 |----------|-----------------|--------------------|----------------|-----------------|
-| Between  |                 |                    |      116.3     |                 |
-| Within   |       2000      |                    |                |                 |
-| Total    |                 |                    |                |                 |
+| Between  |               |       `r k-1`              |      116.3     |                |
+| Within   |       2000      |       `r N-k`               |                 |                 |
+| Total    |               |                   |                |                 |
 
 
 ### Solution
@@ -41,16 +41,15 @@ if(f > s_f){
   print("the means of the categories are not equal")
 }else
   print("the means of the categories are equal")
-
 ## define the variables here, and use the imbedded r code like `r variable` to fill in the blanks.  
 
 ```
 
 |          | Sum of squares  | Degrees of freedom |  Mean square   |       *F*       |
 |----------|-----------------|--------------------|----------------|-----------------|
-| Between  |    `r BSS`             |        `r k-1`     |      116.3     |     `r f`            |
-| Within   |       2000      |        `r N-k`     |            `r Mean_sqW`    |                 |
-| Total    |       `r Total1`          |         `r Total2`           |                |                 |
+| Between  |        `r BSS`           |        `r k-1`     |      116.3     |           `r f`       |
+| Within   |       2000      |        `r N-k`     |     `r Mean_sqW`           |                 |
+| Total    |        `r Total1`           |       `r Total2`              |                |                 |
 
 
 
@@ -82,8 +81,7 @@ Is there a significant difference between the distances moved by low- and high-i
 Test the null hypothesis of homogeneity of variances by forming the ratio $s_1^2 / s_2^2$ which has an F-ratio with $n_1 – 1$ and $n_2 – 1$ degrees of freedom. Then use ANOVA (with $\alpha = 0.10$) to test whether there are differences in the two population means. Set up the null and alternative hypotheses, choose a value of α and a test statistic, and test the null hypothesis. What assumption of the test is likely not satisfied?
 
 ### Solution
-```{r}
-### homogeneity
+```{r, message=FALSE, warning=FALSE}
 library(reshape2)
 library(car)
 group1 <- rnorm( 12, mean = 17.17,sd = 13.25)
@@ -98,7 +96,6 @@ income <- c(low_income,high_income)
 type <- c(rep("low_income",12), rep("high_income",12))
 df <- data.frame(income,type)
 m <- aov(income~type, data = df)
-m
 summary(m)
 qf(0.9,df1 = 1,df2 = 22)        
 oneway.test(income~type, data = df, var.equal = T)
@@ -124,18 +121,26 @@ Use analysis of variance (with α = 0.05) to test the null hypothesis that the m
 
 ### Solution
 ```{r}
-IncomesA <- rnorm(n = 12,mean = 43.2,sd = 36.2) 
-IncomesB <- rnorm(n = 10,mean = 34.3,sd = 20.3)
-IncomesC <- rnorm(n = 8,mean = 27.2,sd = 21.4)
-Incomes <- c(IncomesA,IncomesB,IncomesC)
-group <- c(rep("a",12),rep("b",10),rep("c",8))
-df <- data.frame(Incomes,group)
-result <- aov(Incomes~group,data = df)
-result
-summary(result)
-qf(p = 0.95,df1 = 2,df2 = 27)
-print("reject the null hypothesis")
-print("They are differet within these three groups in their incomes")
+Na <- 12
+Nb <- 10
+Nc <- 8
+MeanA <- 43.2
+MeanB <- 34.3
+MeanC <- 27.2
+SdA <- 36.2
+SdB <- 20.3
+SdC <- 21.4
+MeanT <- 35.97
+SdT <- 29.2
+TSS <- (Na+Nb+Nc-1)*SdT*SdT
+WSS <- (Na-1)*SdA*SdA+(Nb-1)*SdB*SdB+(Nc-1)*SdC*SdC
+BSS <- TSS - WSS
+f <- (BSS/2)/(WSS/27)
+f_t <- qf(p = 0.95,df1 = 2,df2 = 27)
+if(f < f_t){
+  print("there are no difference within these three groups")
+}else 
+  print("They are different in their incomes")
 ```
 
 
