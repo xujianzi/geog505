@@ -67,9 +67,9 @@ if(result4$p.value > 0.05){
 ## Q5-7
 x <- c(1,2,5,6,11,12)
 y <- c(8,4,12,3,10,7)
-result5 <- cor.test(x,y,method = "spearman")
+result5 <- cor.test(x,y,method = "spearman",conf.level = 0.9)
 result5
-if(result5$p.value > 0.1){
+if(result5$p.value > 0.05){
   print("we can't reject non hypothesis")
 } else{
   print("we reject non hypothesis")

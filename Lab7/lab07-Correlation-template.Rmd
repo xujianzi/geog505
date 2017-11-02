@@ -179,7 +179,17 @@ kable(df)
 
 ### Solution
 ```{r}
-
+x <- c(1,2,5,6,11,12)
+y <- c(8,4,12,3,10,7)
+result5 <- cor.test(x,y,method = "spearman",conf.level = .9)
+result5
+if(result5$p.value > 0.05){
+  print("we can't reject non hypothesis")
+} else{
+  print("we reject non hypothesis")
+}
+## correlation coefficient is equal to zero,not signifcant
+## there are no correlation with these two data
 ```
 
 
@@ -203,7 +213,17 @@ kable(df)
 
 ### Solution
 ```{r}
-
+x <- c(3.2,2.4,1.6,8.3,7.2,5.1)
+y <- c(6.2,7.3,8.1,2.6,6.3,4.3)
+result6 <- cor.test(x,y)
+result6
+if(result6$p.value > 0.05){
+  print("we can't reject non hypothesis")
+} else{
+  print("we reject non hypothesis")
+}
+## correlation coefficient is equal to zero,not signifcant
+## there are no correlation with these two data
 ```
 
 
@@ -239,7 +259,9 @@ Plot a scatterplot for the data frame (x: speed, y: dist)
 
 Solution 9a
 ```{r}
-
+library(datasets)
+df <- cars
+plot(df$speed,df$dist,main = "correlation of speed and distance")
 ```
 
 
@@ -248,7 +270,8 @@ How many rows in the data frame?
 
 Solution 9b
 ```{r}
-
+nrow(df)
+## there are 50 rows in the data frame
 ```
 
 
@@ -258,7 +281,16 @@ $$r=\frac{\sum_{n}^{i=1}(x_i-\bar{x})(y_i-\bar{y})}{(n-1)s_{x}s_{y}}$$
 
 Solution 9c
 ```{r}
-
+df$mspeed <- mean(df$speed)
+df$mdist <- mean(df$dist)
+df$difs <- df$speed-df$mspeed
+df$difd <- df$dist - df$mdist
+df$difsd <- df$difs*df$difd
+top <- sum(df$difsd)
+bot <- sd(df$dist)*sd(df$speed)*(nrow(df)-1)
+r <- top/bot
+r
+## the correlation coefficient is 0.8068949
 ```
 
 
@@ -267,7 +299,11 @@ Use the cor.test() function to find Pearson’s correlation coefficient and comp
 
 Solution 9d
 ```{r}
-
+result9d <- cor.test(df$speed, df$dist)
+result9d
+if(result9d$estimate == r){
+  print("this two outputs are equal")
+}
 ```
 
 
@@ -277,7 +313,14 @@ $$r_{S} = 1 - \frac{6\sum_{i=1}^{n}d_{i}^{2}}{n^3-n}$$
 
 Solution 9e
 ```{r}
-
+n <- nrow(df)
+df$ranksp <- rank(df$speed) 
+df$rankdi <- rank(df$dist)
+df$dif <- df$ranksp - df$rankdi
+df$sq_dif <- df$dif^2
+top <-sum(df$sq_dif)
+rs <- 1- 6*top/(n^3-n)
+rs
 ```
 
 
@@ -287,6 +330,12 @@ Use the cor.test() function to find Spearman’s rank correlation coefficient an
 
 Solution 9f
 ```{r}
-
+result9f <- cor.test(df$speed,df$dist,method = "spearman")
+result9f 
+if(result9f$estimate == rs){
+  print("they are equal")
+}else
+  print("they are not exactly equal")
+## the manual result and the cor.test result are roughly equal.
 ```
 
