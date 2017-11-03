@@ -234,8 +234,34 @@ This is Exercise 9 in Chapter 7 of the Textbook [R].
 Using R and the Milwaukee dataset, find the correlation between number of bedrooms and lot size.
 
 ### Solution
-```{r}
+```{r, message=FALSE, warning=FALSE}
+### a
+df <- read.csv("https://xujianzi.github.io/data/Bedroom.csv",header = T)
+result7 <- cor.test(df$Bdrms,df$Lotsize,alternative = "greater", method = "spearman")
+result7
+c_r <- 2/sqrt(nrow(df))
+c_r
+if(result7$estimate > c_r && result7$p.value <= 0.05){
+  print("rs is significant, we accept alternative hypothesis")
+}else{
+  print("we can not reject non hypothesis")
+}
+## the bedroom number and lot size have positive correlation.
+## the bigger bedroom number is , the larger size the lot has.
+```
 
+```{r, message=FALSE, warning=FALSE}
+### b
+df1 <- head(df,n = 7)
+result7b <- cor.test(df1$Bdrms,df1$Lotsize, method = "spearman")
+result7b
+c_r1 <- 2/sqrt(7)
+c_r1
+if(abs(result7b$estimate)>c_r1){
+  print("rs is significant, we accept alternative hypothesis")
+}else
+  print("rs is not significant, we can not reject non hypothesis")
+## the bedroom number and lot size don't have correlation.
 ```
 
 
@@ -246,8 +272,19 @@ This is Exercise 10 in Chapter 7 of the Textbook [R].
 Using R and the Hypothetical UK Housing Prices dataset, find the correlation between floor area and number of bedrooms.
 
 ### Solution
-```{r}
-
+```{r, message=FALSE, warning=FALSE}
+df <- read.csv("https://xujianzi.github.io/data/UK.csv",header = T)
+result8 <- cor.test(df$bedrooms,df$floorarea,
+                    alternative = "greater",method = "spearman")
+result8
+c_r <- 2/sqrt(nrow(df))
+if(result8$estimate > c_r && result8$p.value <= 0.05){
+  print("rs is significant, we accept alternative hypothesis")
+}else {
+  print("we can not reject non hypothesis")
+}
+## the number of bedrooms and floorarea have positive correlation.
+## the bigger bedroom number is, the larger floorarea is.
 ```
 
 
@@ -329,7 +366,7 @@ rs
 Use the cor.test() function to find Spearman’s rank correlation coefficient and compare it to the one from part (e)
 
 Solution 9f
-```{r}
+```{r, message=FALSE, warning=FALSE}
 result9f <- cor.test(df$speed,df$dist,method = "spearman")
 result9f 
 if(result9f$estimate == rs){
