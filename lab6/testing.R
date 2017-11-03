@@ -15,7 +15,7 @@ type <- c(rep("low_income",12), rep("high_income",12))
 df <- data.frame(income,type)
 m <- aov(income~type, data = df)
 m
-summary(m)
+result <-summary(m)
 qf(0.9,df1 = 1,df2 = 22)        
 oneway.test(income~type, data = df, var.equal = T)
 print("There is no difference in the two population means")
@@ -33,6 +33,27 @@ summary(result)
 qf(p = 0.95,df1 = 2,df2 = )
 print("reject the null hypothesis")
 print("They are differet within these three groups in their incomes")
+## Q3
+Na <- 12
+Nb <- 10
+Nc <- 8
+MeanA <- 43.2
+MeanB <- 34.3
+MeanC <- 27.2
+SdA <- 36.2
+SdB <- 20.3
+SdC <- 21.4
+MeanT <- 35.97
+SdT <- 29.2
+TSS <- (Na+Nb+Nc-1)*SdT*SdT
+WSS <- (Na-1)*SdA*SdA+(Nb-1)*SdB*SdB+(Nc-1)*SdC*SdC
+BSS <- TSS - WSS
+f <- (BSS/2)/(WSS/27)
+f_t <- qf(p = 0.95,df1 = 2,df2 = 27)
+if(f < f_t){
+  print("there are no difference within these three groups")
+}else 
+  print("They are different in their incomes")
 
 ## Q4-10
 Col1 <- c(23.1,13.3,15.6,1.2)
