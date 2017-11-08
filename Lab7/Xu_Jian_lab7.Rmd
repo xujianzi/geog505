@@ -156,6 +156,7 @@ if(result4$p.value > 0.05){
 } else{
   print("we reject non hypothesis")
 }
+#Median income are not relative to Number of races
 ```
 
 

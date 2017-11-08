@@ -81,7 +81,7 @@ if(result5$p.value > 0.05){
 ## Q6-8
 x <- c(3.2,2.4,1.6,8.3,7.2,5.1)
 y <- c(6.2,7.3,8.1,2.6,6.3,4.3)
-result6 <- cor.test(x,y)
+result6 <- cor.test(y,x)
 result6
 if(result6$p.value > 0.05){
   print("we can't reject non hypothesis")
@@ -93,7 +93,50 @@ if(result6$p.value > 0.05){
 
 
 ## Q7-9
+### a
+df <- read.csv("https://xujianzi.github.io/data/Bedroom.csv",header = T)
+result7 <- cor.test(df$Bdrms,df$Lotsize,alternative = "greater", method = "spearman")
+result7
+c_r <- 2/sqrt(nrow(df))
+c_r
+if(result7$estimate > c_r && result7$p.value <= 0.05){
+  print("rs is significant, we accept alternative hypothesis")
+}else{
+  print("we can not reject non hypothesis")
+}
+## the bedroom number and lot size have positive correlation.
+## the bigger bedroom number is , the larger size the lot has.
+
+
+### b
+df1 <- head(df,n = 7)
+result7b <- cor.test(df1$Bdrms,df1$Lotsize, method = "spearman")
+result7b
+c_r1 <- 2/sqrt(7)
+c_r1
+if(abs(result7b$estimate)>c_r1){
+  print("rs is significant, we accept alternative hypothesis")
+}else
+  print("rs is not significant, we can not reject non hypothesis")
+## the bedroom number and lot size don't have correlation.
+
+
+
 ## Q8-10
+df <- read.csv("https://xujianzi.github.io/data/UK.csv",header = T)
+result8 <- cor.test(df$bedrooms,df$floorarea,
+                    alternative = "greater",method = "spearman")
+result8
+c_r <- 2/sqrt(nrow(df))
+if(result8$estimate > c_r && result8$p.value <= 0.05){
+  print("rs is significant, we accept alternative hypothesis")
+}else {
+  print("we can not reject non hypothesis")
+}
+## the number of bedrooms and floorarea have positive correlation.
+## the bigger bedroom number is, the larger floorarea is.
+
+
 ## Q9
 library(datasets)
 df <- cars
